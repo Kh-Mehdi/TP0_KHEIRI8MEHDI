@@ -15,35 +15,39 @@
         <h:form id="form">
             <p:outputLabel for="systemrole" value="Rôle de l'API : "/>
             <p:selectOneMenu id="systemrole" value="#{bb.systemRole}" editable="true"
-                             disabled="#{! bb.systemRoleChangeable}">
+                             disabled="#{!bb.systemRoleChangeable}">
                 <f:selectItems value="#{bb.systemRoles}"/>
             </p:selectOneMenu>
             <h:outputText value="  "/>
-            <h:commandButton value="Nouveau chat" action="#{bb.nouveauChat}" />
+            <p:commandButton value="Nouveau chat" action="#{bb.nouveauChat}" />
+
             <h:panelGrid id="paneltotal" columns="2" columnClasses="topAligned,topAligned">
+                <!-- Colonne Gauche -->
                 <h:panelGrid id="panelgauche" columns="1">
                     <h:panelGrid id="questionetreponse" columns="1">
                         <h:panelGroup>
                             <h:outputText value="Question :"/>
-                            <button onclick="copyToClipboard('question')">Copier question</button>
-                            <button onclick="toutEffacer()">Effacer question et réponse</button>
+                            <p:commandButton value="Copier question" onclick="copyToClipboard('question')" />
+                            <p:commandButton value="Effacer question et réponse" onclick="toutEffacer()" />
                         </h:panelGroup>
                         <h:inputTextarea id="question" value="#{bb.question}" title="Question"
-                                         cols="50" rows="5"/>
-                        <h:commandButton value="Envoyer la question" action="#{bb.envoyer}"/>
+                                         cols="50" rows="5" required="true"
+                                         requiredMessage="La question est obligatoire."/>
+                        <p:commandButton value="Envoyer la question" action="#{bb.envoyer}" update="reponse paneltotal" />
                         <h:panelGroup>
                             <h:outputText value="Réponse :"/>
-                            <button onclick="copyToClipboard('reponse')">Copier réponse</button>
+                            <p:commandButton value="Copier réponse" onclick="copyToClipboard('reponse')" />
                         </h:panelGroup>
                         <h:inputTextarea id="reponse" value="#{bb.reponse}" title="Réponse"
-                                         cols="50" rows="15"/>
+                                         cols="50" rows="15" readonly="true"/>
                     </h:panelGrid>
-
                 </h:panelGrid>
+
+                <!-- Colonne Droite -->
                 <h:panelGrid id="paneldroit" columns="1" style="vertical-align: top;">
                     <h:panelGroup>
                         <h:outputText value="Conversation :"/>
-                        <button onclick="copyToClipboard('conversation')">Copier conversation</button>
+                        <p:commandButton value="Copier conversation" onclick="copyToClipboard('conversation')" />
                     </h:panelGroup>
                     <h:inputTextarea id="conversation" rows="30" cols="50" readonly="true"
                                      value="#{bb.conversation}" title="Conversation entière"/>
